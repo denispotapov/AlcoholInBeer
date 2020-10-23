@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AlcoholInBeer</string>
+    <string name="og">Начальная плотность</string>
+    <string name="fg">Конечная плотность</string>
+</resources>
