@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private fun init() {
         val og = editText.text.toString()
         val fg = editText2.text.toString()
-        if (og != "" && fg != "") text.text = density(og.toDouble(), fg.toDouble())
+        if (og != "" && fg != "") text.text = ("Алкоголь объемный: ${density(og.toDouble(), fg.toDouble())}%")
         if (og == "" && fg == "") Toast.makeText(this, "Введите плотность", Toast.LENGTH_LONG).show()
         if (og == "" && fg != "") Toast.makeText(this, "Введите начальную плотность", Toast.LENGTH_LONG).show()
         if (og != "" && fg == "") Toast.makeText(this, "Введите конечную плотность", Toast.LENGTH_LONG).show()
