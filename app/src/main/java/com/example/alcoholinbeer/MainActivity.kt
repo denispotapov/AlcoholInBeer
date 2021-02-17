@@ -3,33 +3,37 @@ package com.example.alcoholinbeer
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import java.text.DecimalFormat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.alcoholinbeer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.lifecycleOwner = this
 
-        button.setOnClickListener {
-            init()
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java).also {
+            binding.viewmodel = it
         }
-    }
-    private fun init() {
-        val og = editText.text.toString()
-        val fg = editText2.text.toString()
-        if (og != "" && fg != "") text.text = ("Алкоголь объемный: ${density(og.toDouble(), fg.toDouble())}%")
-        if (og == "" && fg == "") Toast.makeText(this, "Введите плотность", Toast.LENGTH_LONG).show()
-        if (og == "" && fg != "") Toast.makeText(this, "Введите начальную плотность", Toast.LENGTH_LONG).show()
-        if (og != "" && fg == "") Toast.makeText(this, "Введите конечную плотность", Toast.LENGTH_LONG).show()
-    }
 
-    private fun density(og: Double, fg: Double): String {
+        binding.buttonResult.setOnClickListener {
+            viewModel.onResultButtonClick()
 
-        fun sG(brix: Double): Double {
-            return (brix / (258.6 - ((brix / 258.2) * 227.1))) + 1
+            if (binding.editTextInitialDensity.text.toString()
+                    .isEmpty() || binding.editTextFinalDensity.text.toString()
+                    .isEmpty()
+            ) {
+                viewModel.message.observe(this, Observer {
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                })
+            }
         }
-        val abv = (76.08 * (sG(og) - sG(fg)) / (1.775 - sG(og))) * (sG(fg) / 0.794)
-        return DecimalFormat("0.00").format(abv)
     }
 }

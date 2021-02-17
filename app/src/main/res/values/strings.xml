@@ -3,4 +3,5 @@
     <string name="og">Начальная плотность</string>
     <string name="fg">Конечная плотность</string>
     <string name="calc_alc">Калькулятор алкоголя в пиве</string>
+    <string name="result">Результат</string>
 </resources>
