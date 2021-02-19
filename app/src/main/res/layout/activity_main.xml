@@ -48,7 +48,8 @@
             android:ems="10"
             android:hint="@string/og"
             android:inputType="numberDecimal"
-            android:text="@={viewmodel.initialDensity}"
+
+            app:double="@={viewmodel.initialDensity}"
             app:layout_constraintBottom_toTopOf="@+id/editText_final_density"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +64,8 @@
             android:ems="10"
             android:hint="@string/fg"
             android:inputType="numberDecimal"
-            android:text="@={viewmodel.finalDensity}"
+
+            app:double="@={viewmodel.finalDensity}"
             app:layout_constraintBottom_toTopOf="@+id/text_alc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"

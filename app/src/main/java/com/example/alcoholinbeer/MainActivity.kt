@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding.buttonResult.setOnClickListener {
             viewModel.onResultButtonClick()
 
-            if (binding.editTextInitialDensity.text.toString()
-                    .isEmpty() || binding.editTextFinalDensity.text.toString()
-                    .isEmpty()
+            if (binding.editTextInitialDensity.text.toString().isEmpty()
+                || binding.editTextFinalDensity.text.toString().isEmpty()
+
             ) {
                 viewModel.message.observe(this, Observer {
                     Toast.makeText(this, it, Toast.LENGTH_SHORT).show()

@@ -7,8 +7,8 @@ import java.text.DecimalFormat
 
 class MainViewModel : ViewModel() {
 
-    val initialDensity = MutableLiveData<String>()
-    val finalDensity = MutableLiveData<String>()
+    val initialDensity = MutableLiveData<Double?>()
+    val finalDensity = MutableLiveData<Double?>()
 
     private val _result = MutableLiveData<String>()
     val result: LiveData<String> = _result
@@ -17,27 +17,30 @@ class MainViewModel : ViewModel() {
     val message: LiveData<String?> = _message
 
     fun onResultButtonClick() {
-       if (!initialDensity.value.isNullOrEmpty() && !finalDensity.value.isNullOrEmpty()) {
-            _result.value = "Алкоголь объемный: ${getAlcohol(initialDensity.value.toString(), finalDensity.value.toString())}%"
+       if (initialDensity.value !=null && finalDensity.value !=null) {
+            _result.value = "Алкоголь объемный: ${getAlcohol(initialDensity.value, finalDensity.value)}%"
        }
 
-        if (initialDensity.value.isNullOrEmpty() && finalDensity.value.isNullOrEmpty()) {
+        if (initialDensity.value == null && finalDensity.value == null) {
             _message.value = "Введите плотность"
         }
 
-        if (initialDensity.value.isNullOrEmpty() && !finalDensity.value.isNullOrEmpty()) {
+        if (initialDensity.value == null && finalDensity.value != null) {
             _message.value = "Введите начальную плотность"
         }
 
-        if (!initialDensity.value.isNullOrEmpty() && finalDensity.value.isNullOrEmpty()) {
+        if (initialDensity.value != null && finalDensity.value == null) {
             _message.value = "Введите конечную плотность"
         }
     }
 
-    private fun getAlcohol(initialDensity: String, finalDensity: String): String {
-        fun sG(brix: String): Double {
-            return (brix.toDouble() / (258.6 - ((brix.toDouble() / 258.2) *
-                    227.1))) + 1
+    private fun getAlcohol(initialDensity: Double?, finalDensity: Double?): String {
+        fun sG(brix: Double?): Double {
+            var result = 0.0
+            if (brix != null) {
+                result = (brix / (258.6 - ((brix / 258.2) * 227.1))) + 1
+            }
+            return result
         }
 
         val abv =
